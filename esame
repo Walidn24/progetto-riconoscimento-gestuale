@@ -1,0 +1,37 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riconoscimento Gestuale</title>
+</head>
+<body>
+    <h1>Riconoscimento Gestuale</h1>
+    <div id="camera-view">
+        <video id="video" width="640" height="480" autoplay></video>
+    </div>
+    <div id="gesture-info">
+        <p>Aspettando un gesto...</p>
+    </div>
+
+    <script>
+        // Ottieni il riferimento al video e al contenitore delle informazioni sul gesto
+        const video = document.getElementById('video');
+        const gestureInfo = document.getElementById('gesture-info');
+
+        // Ottieni l'accesso alla fotocamera del dispositivo
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function (stream) {
+                video.srcObject = stream;
+            })
+            .catch(function (err) {
+                console.log("Errore durante l'accesso alla fotocamera: " + err);
+            });
+
+        // Aggiungi un listener per il riconoscimento dei gesti
+        video.addEventListener('gesture', function(event) {
+            // Aggiorna le informazioni sul gesto rilevato
+            gestureInfo.innerHTML = "<p>Gesto rilevato: " + event.detail.gesture + "</p>";
+        });
+    </script>
+</body>
+</html>
